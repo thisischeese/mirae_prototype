@@ -4,42 +4,45 @@ from streamlit_agraph import agraph, Node, Edge, Config, TripleStore
 import logging
 import os
 import pandas as pd
+from pyparsing import empty
 
 def sidebox_left():
-    st.markdown(
-        """
-        <style>
-            [data-testid=stSidebar] [data-testid=stImage]{
-                text-align: center;
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                width: 100%;
-            }
-        </style>
-        """, unsafe_allow_html=True
-    )
+
     with st.sidebar:
-        st.image('https://securities.miraeasset.com/newir/publishing/pc/images/common/logo_footer_kr.png',width = 200)
-        footer_html = """<div style='text-align: center;'>
-          <p>🩷PinkCoconut🥥</p>
-        </div>"""
-        st.markdown(footer_html, unsafe_allow_html=True)
+
+        st.image('https://securities.miraeasset.com/newir/publishing/pc/images/common/logo_footer_kr.png', width=200)
+        st.markdown("<h1 style='text-align: center; color: #043B72;'>🩷PinkCoconut🥥</h1>", unsafe_allow_html=True)
+        st.markdown(
+            """
+            <style>
+                [data-testid=stSidebar] [data-testid=stImage]{
+                    text-align: center;
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 100%;
+                }
+            </style>
+            """, unsafe_allow_html=True
+        )
+
+
+
 
 def initialization():
     st.set_page_config(layout="wide")
     # 단어 입력받기
     word = st.text_input("그래프를 그릴 주식명을 입력하세요")
-    st.title(word)
+    ticker = get_ticker(word,'data/nasdaq_code.csv','data/kor_code.csv')
+    if ticker is not None:
+        st.header(word + ': ' + ticker)
+    else:
+        st.header(word)
     sidebox_left()
     return word
 def draw_graph(word,model):
     # 주식회사명 리스트 생성
-    kor_code_df = pd.read_csv('./data/kor_code.csv')
-    nq_code_df = pd.read_csv('./data/nasdaq_code.csv')
-    kor_code = [item[0] for item in kor_code_df[['종목명']].values.tolist()]
-    nq_code = list(set([item[0] for item in nq_code_df[['Symbol_kor']].values.tolist()]) ^ set([item[0] for item in nq_code_df[['Symbol']].values.tolist()]))
-
+    kor_code, nq_code = get_codelist(word,'data/nasdaq_code.csv','data/kor_code.csv')
     # 그래프 생성
     G = create_graph(model,word)
     # 노드 색깔 지정
