@@ -130,10 +130,10 @@ def main(word,model):
                     color='#ECEFF4',
                     collapsible=True,
                     node={'labelProperty':'label'},
-                    link={'labelProperty': 'label', 'renderLabel': True},
-                    clickToUse = 'node_click'
+                    link={'labelProperty': 'label', 'renderLabel': True}
                     )
-    original_fig = fetch_candlestick_chart(word,get_ticker(word,'data/nasdaq_code.csv','data/kor_code.csv'))
+    original_ticker = get_ticker(word,'data/nasdaq_code.csv','data/kor_code.csv')
+    original_fig = fetch_candlestick_chart(word,original_ticker)
     st.sidebar.plotly_chart(original_fig)
     return_value = agraph(nodes=nodes,edges=edges,config=config)
     logging.info(f"RETURN VALUE : {return_value}")
