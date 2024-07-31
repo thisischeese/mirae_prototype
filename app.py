@@ -2,12 +2,8 @@ import streamlit as st
 from utils import *
 from streamlit_agraph import agraph, Node, Edge, Config, TripleStore
 import logging
-import os
-import pandas as pd
-from streamlit_extras.bottom_container import bottom
 from htbuilder import HtmlElement, div, ul, li, br, hr, a, p, img, styles, classes, fonts
 from htbuilder.units import percent, px
-from htbuilder.funcs import rgba, rgb
 
 def layout(*args):
     style = """
