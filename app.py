@@ -132,16 +132,19 @@ def main(word,model):
                     node={'labelProperty':'label'},
                     link={'labelProperty': 'label', 'renderLabel': True}
                     )
+
+    return_value = agraph(nodes=nodes,edges=edges,config=config)
+
     original_ticker = get_ticker(word,'data/nasdaq_code.csv','data/kor_code.csv')
     original_fig = fetch_candlestick_chart(word,original_ticker)
+    logging.info(f"original word : {word},original_ticker : {original_ticker}")
     st.sidebar.plotly_chart(original_fig)
-    return_value = agraph(nodes=nodes,edges=edges,config=config)
-    logging.info(f"RETURN VALUE : {return_value}")
+
     kor_code, nq_code = get_codelist('data/nasdaq_code.csv','data/kor_code.csv')
     if return_value in kor_code or return_value in nq_code:
         ticker = get_ticker(return_value, 'data/nasdaq_code.csv', 'data/kor_code.csv')
         if ticker:
-            logging.info(f"TICKER:{ticker}")
+            logging.info(f"selected_word, selected_ticker:{ticker}")
             selected_fig = fetch_candlestick_chart(return_value,ticker)
             st.sidebar.plotly_chart(selected_fig)
         else:

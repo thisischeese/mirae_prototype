@@ -4,6 +4,7 @@ import os
 import pandas as pd
 import FinanceDataReader as fdr
 import plotly.graph_objects as go
+import logging
 
 def create_graph(model_name,word,n1=5,n2=5):
     model_path = os.path.join('model',model_name)
@@ -59,7 +60,7 @@ def fetch_candlestick_chart(word,ticker):
     end_date = pd.to_datetime("today")
     start_date = end_date - pd.DateOffset(days=7)
     df = fdr.DataReader(ticker, start_date, end_date)
-
+    logging.info(df.columns)
     fig = go.Figure(data=[go.Candlestick(
         x=df.index,
         open=df['Open'],
