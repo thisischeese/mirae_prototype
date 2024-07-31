@@ -99,7 +99,7 @@ def initialization():
     return word
 def draw_graph(word,model):
     # 주식회사명 리스트 생성
-    kor_code, nq_code = get_codelist(word,'data/nasdaq_code.csv','data/kor_code.csv')
+    kor_code, nq_code = get_codelist('data/nasdaq_code.csv','data/kor_code.csv')
     # 그래프 생성
     G = create_graph(model,word)
     # 노드 색깔 지정
@@ -130,12 +130,24 @@ def main(word,model):
                     color='#ECEFF4',
                     collapsible=True,
                     node={'labelProperty':'label'},
-                    link={'labelProperty': 'label', 'renderLabel': True}
+                    link={'labelProperty': 'label', 'renderLabel': True},
+                    onClickNode = 'node_click'
                     )
-
-    return_value = agraph(nodes=nodes,
-                          edges=edges,
-                          config=config)
+    original_fig = fetch_candlestick_chart(word,get_ticker(word,'data/nasdaq_code.csv','data/kor_code.csv'))
+    st.sidebar.plotly_chart(original_fig)
+    return_value = agraph(nodes=nodes,edges=edges,config=config)
+    logging.info(f"RETURN VALUE : {return_value}")
+    kor_code, nq_code = get_codelist('data/nasdaq_code.csv','data/kor_code.csv')
+    if return_value in kor_code or return_value in nq_code:
+        ticker = get_ticker(return_value, 'data/nasdaq_code.csv', 'data/kor_code.csv')
+        if ticker:
+            logging.info(f"TICKER:{ticker}")
+            selected_fig = fetch_candlestick_chart(return_value,ticker)
+            st.sidebar.plotly_chart(selected_fig)
+        else:
+            logging.info(f"CAN NOT FIND TICKER")
+    else:
+        logging.info(f"NO RETURN VALUE EXISTS OR RETURN VALUE NOT IN CODE")
 
 
 if __name__ == "__main__":
@@ -147,7 +159,8 @@ if __name__ == "__main__":
     if word !='':
         logging.info(f"WORD:{word}")
         # 모델 설정
-        model = 'word2vec_mj_extendedblog_관련주_한미.model'
+        model = 'word2vec_final_blog.model'
+        logging.info(f"MODEL:{model}")
         main(word,model)
     else:
         logging.info(f"WRONG INPUT")
