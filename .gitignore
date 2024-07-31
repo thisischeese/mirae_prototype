@@ -1,4 +1,3 @@
-*.model
+/model/word2vec_mj_extendedblog_관련주_한미.model
 *.log
 
-!word2vec_final_blog.model
