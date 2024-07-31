@@ -1,1 +1,4 @@
+*.model
 *.log
+
+!word2vec_final_blog.model
