@@ -4,14 +4,67 @@ from streamlit_agraph import agraph, Node, Edge, Config, TripleStore
 import logging
 import os
 import pandas as pd
-from pyparsing import empty
+from streamlit_extras.bottom_container import bottom
+from htbuilder import HtmlElement, div, ul, li, br, hr, a, p, img, styles, classes, fonts
+from htbuilder.units import percent, px
+from htbuilder.funcs import rgba, rgb
 
-def sidebox_left():
+def layout(*args):
+    style = """
+    <style>
+      # MainMenu {visibility: hidden;}
+      footer {visibility: hidden;}
+      .stApp { padding-bottom: 60px; } /* Adjust padding to accommodate footer */
+      .footer-container {
+          position: fixed;
+          left: 0;
+          bottom: 0;
+          width: auto;
+          color: black;
+          text-align: center;
+          background-color: transparent; /* Make background transparent */
+          padding: 10px;
+          transform: translateX(9%);
+      }
+    </style>
+    """
+
+    style_div = styles(
+        margin=px(0),
+        width=percent(100),
+        height="auto",
+        opacity=1
+    )
+
+    body = p()
+    foot = div(
+        style=style_div,
+        _class="footer-container"
+    )(
+        body
+    )
+
+    st.markdown(style, unsafe_allow_html=True)
+
+    for arg in args:
+        if isinstance(arg, str):
+            body(arg)
+        elif isinstance(arg, HtmlElement):
+            body(arg)
+
+    st.markdown(str(foot), unsafe_allow_html=True)
+
+def footer_design():
+    myargs = [
+
+        "© 💓PinkCoconut🥥"
+    ]
+    layout(*myargs)
+def design():
 
     with st.sidebar:
 
         st.image('https://securities.miraeasset.com/newir/publishing/pc/images/common/logo_footer_kr.png', width=200)
-        st.markdown("<h1 style='text-align: center; color: #043B72;'>🩷PinkCoconut🥥</h1>", unsafe_allow_html=True)
         st.markdown(
             """
             <style>
@@ -25,6 +78,14 @@ def sidebox_left():
             </style>
             """, unsafe_allow_html=True
         )
+        footer_design()
+        #st.markdown("### Graph Node Color Legend")
+        st.markdown("<div style='background-color:#F58220; padding:5px; color:white;'>NASDAQ</div>", unsafe_allow_html=True)
+        st.markdown("<div style='background-color:#043B72; padding:5px; color:white;'>KRX</div>", unsafe_allow_html=True)
+        st.markdown("<div style='background-color:#84888B; padding:5px; color:white;'>Others</div>", unsafe_allow_html=True)
+
+
+
 
 
 
@@ -38,7 +99,7 @@ def initialization():
         st.header(word + ': ' + ticker)
     else:
         st.header(word)
-    sidebox_left()
+    design()
     return word
 def draw_graph(word,model):
     # 주식회사명 리스트 생성

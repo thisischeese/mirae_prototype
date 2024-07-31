@@ -38,7 +38,7 @@ def get_ticker(word,nq_code_name,kor_code_name):
     kor_code, nq_code = get_codelist(word,nq_code_name,kor_code_name)
     if word in nq_code:
         nq_df = pd.read_csv(nq_code_name)
-        return "NASDAQ "+nq_df.loc[nq_df['Symbol_kor']==word,'Symbol'].iloc[0]
+        return nq_df.loc[nq_df['Symbol_kor']==word,'Symbol'].iloc[0]
     elif word in kor_code:
         kr_df = pd.read_csv(kor_code_name)
         return 'KRX '+kr_df.loc[kr_df['종목명']==word,'종목코드'].iloc[0]
