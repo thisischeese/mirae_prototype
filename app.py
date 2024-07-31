@@ -48,12 +48,19 @@ def draw_graph(word,model):
     # 노드 색깔 지정
     color_list = set_color(G,nq_code,kor_code)
     nodes = []
+    edges = []
     i=0
+
     for item in G.nodes:
         nodes.append(Node(id=item, label=str(item), size=20,color=color_list[i]))
         i+=1
 
-    edges = [Edge(source=i, target=j, type="CURVE_SMOOTH") for (i,j) in G.edges]
+    for i,j in G.edges:
+        if i == word:
+            edges.append(Edge(source=i, target=j, type="CURVE_SMOOTH",color = '#8DC8E8',width=2))
+        else:
+            edges.append(Edge(source=i, target=j, type="CURVE_SMOOTH",color = '#A0A6A8'))
+
     logging.info(f"G.NODES LABEL:{G.nodes}")
     return nodes,edges
 
