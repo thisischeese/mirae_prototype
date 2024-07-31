@@ -131,7 +131,7 @@ def main(word,model):
                     collapsible=True,
                     node={'labelProperty':'label'},
                     link={'labelProperty': 'label', 'renderLabel': True},
-                    onClickNode = 'node_click'
+                    clickToUse = 'node_click'
                     )
     original_fig = fetch_candlestick_chart(word,get_ticker(word,'data/nasdaq_code.csv','data/kor_code.csv'))
     st.sidebar.plotly_chart(original_fig)
