@@ -12,7 +12,7 @@
 | 운영체제          |                   Windows 11 |
 | 버전 관리 시스템     |                  Git, Github |
 | 개발 도구         |               Pycharm 2024.1 |
-| 개발 언어 및 프레임워크 | 1. Python 3<br/>2. Streamlit |
+| 개발 언어 및 프레임워크 | 1. Python 3<br/>2. Streamlit v1.37.0 |
 
 # 팀원 소개 
 * 김민주 - 기획
