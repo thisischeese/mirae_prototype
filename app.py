@@ -53,14 +53,14 @@ def layout(*args):
 def footer_design():
     myargs = [
 
-        "© 💓PinkCoconut🥥"
+        "© Daeun"
     ]
     layout(*myargs)
 def design():
 
     with st.sidebar:
 
-        st.image('https://securities.miraeasset.com/newir/publishing/pc/images/common/logo_footer_kr.png', width=200)
+        #st.image('https://securities.miraeasset.com/newir/publishing/pc/images/common/logo_footer_kr.png', width=200)
         st.markdown(
             """
             <style>
@@ -162,7 +162,7 @@ if __name__ == "__main__":
     if word !='':
         logging.info(f"WORD:{word}")
         # 모델 설정
-        model = 'word2vec_final_blog.model'
+        model = 'word2vec.model'
         logging.info(f"MODEL:{model}")
         main(word,model)
     else:
