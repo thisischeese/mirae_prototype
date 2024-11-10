@@ -47,7 +47,7 @@
   </tr>
   <tr>
     <td>버전 관리 시스템</td>
-    <td>-</td>
+    <td>Git, Github</td>
   </tr>
   <tr>
     <td>IDE</td>
