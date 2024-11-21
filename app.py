@@ -162,7 +162,7 @@ if __name__ == "__main__":
     if word !='':
         logging.info(f"WORD:{word}")
         # 모델 설정
-        model = 'word2vec.model'
+        model = 'word2vec_sg.model'
         logging.info(f"MODEL:{model}")
         main(word,model)
     else:
